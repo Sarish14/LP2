@@ -34,26 +34,34 @@ void show(int n, vector<string> &board)
 	}
 	cout<<endl;
 }
+
 int main() {
-	int n;
-	cout<<"Enter dimension value: "<<endl;
-	cin>>n;
-	vector<vector<string>> ans;
-	vector<string> board(n);
-	string s(n,'.');
-	for(int i=0;i<n;i++)
-	{
-		board[i]=s;
+	try{
+		cout<<"Enter dimension value: "<<endl;
+		string num;
+		cin>>num;
+		int n=stoi(num);
+		vector<vector<string>> ans;
+		vector<string> board(n);
+		string s(n,'.');
+		for(int i=0;i<n;i++)
+		{
+			board[i]=s;
+		}
+		vector<int> left(n,0);
+		vector<int> upperDiag(2*n-1,0);
+		vector<int> lowerDiag(2*n-1,0);
+		show(n,board);
+		solve(0,n,ans,board,left,upperDiag,lowerDiag);
+		for(int i=0;i<ans.size();i++)
+		{
+			show(n,ans[i]);
+			cout<<"---------------"<<endl;
+		}
 	}
-	vector<int> left(n,0);
-	vector<int> upperDiag(2*n-1,0);
-	vector<int> lowerDiag(2*n-1,0);
-	show(n,board);
-	solve(0,n,ans,board,left,upperDiag,lowerDiag);
-	for(int i=0;i<ans.size();i++)
-	{
-		show(n,ans[i]);
-		cout<<"---------------"<<endl;
+	catch(invalid_argument& ex){
+		cout<<"Enter valid argument"<<endl;
 	}
+
 	return 0;
 }
