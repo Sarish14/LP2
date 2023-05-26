@@ -1,0 +1,760 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void bfs(int V, vector<int> adj[])
+{
+	vector<int> ans;
+	int visited[V]={0};
+	queue<int> q;
+
+	q.push(0);
+	visited[0]=1;
+	while(!q.empty())
+	{
+		int curr=q.front();
+		ans.push_back(curr);
+		q.pop();
+		for(auto i:adj[curr])
+		{
+			if(visited[i]==0)
+			{
+				q.push(i);
+				visited[i]=1;
+			}
+		}
+	}
+	for(int i=0;i<ans.size();i++)
+	{
+		cout<<ans[i]<<' ';
+	}
+}
+
+void bfs_search(int V, vector<int> adj[], int node)
+{
+	int find=0;
+	vector<int> ans;
+	int visited[V]={0};
+	queue<int> q;
+	visited[0]=1;
+	q.push(0);
+	while(!q.empty())
+	{
+		int temp=q.front();
+		q.pop();
+		ans.push_back(temp);
+		if(node==temp)
+		{
+			find=1;
+			break;
+		}
+
+		for(auto i:adj[temp])
+		{
+			if(visited[i]==0)
+			{
+				q.push(i);
+				visited[i]=1;
+			}
+		}
+	}
+	if(find==1)
+	{
+		cout<<"Element found"<<endl;
+		for(int i=0;i<ans.size();i++)
+		{
+			cout<<ans[i]<<' ';
+		}
+	}
+	else
+	{
+		cout<<"Element not found"<<endl;
+	}
+}
+
+void dfs(int curr, vector<int> adj[], int visited[], vector<int> &ans, int v)
+{
+	visited[curr]=1;
+	ans.push_back(curr);
+	for(auto i:adj[curr])
+	{
+		if(visited[i]==0)
+		{
+			dfs(i,adj,visited,ans,v);
+		}
+	}
+}
+
+void dfs_rec_search(vector<int>vec[],vector<int> &visit,stack<int>st,vector<int> &ans,int & find,int target)
+ {
+      int n=st.top();
+    st.pop();
+     vector<int>a=vec[n];
+     ans.push_back(n);
+     if(n==target)
+     {
+         find=1;
+         return;
+     }
+
+     for(int i=0;i<a.size();i++)
+     {
+         int ele=a[i];
+         if(visit[a[i]]==0)
+         {
+             visit[a[i]]=1;
+
+             st.push(a[i]);
+             dfs_rec_search(vec,visit,st,ans,find,target);
+             if(find==1)
+             {
+                 break;
+             }
+         }
+     }
+ }
+
+int main() {
+	int n, edges, u, v;
+	cout<<"Enter number of vertices: "<<endl;
+	cin>>n;
+	vector<int> graph[n];
+	cout<<"Enter number of edges: "<<endl;
+	cin>>edges;
+	for(int i=0;i<edges;i++)
+	{
+	    cout<<"Enter source index : ";
+		cin>>u;
+		cout<<"Enter destination vertex : ";
+		cin>>v;
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+	}
+
+	 cout<<"\nGraph\n";
+
+	for(int i=0;i<n;i++)
+	{
+		cout<<i<<" -> ";
+		//vector<int>a=graph[i];
+		for(int j=0;j<graph[i].size();j++)
+		 {
+			 cout<<graph[i][j]<<" ";
+		 }
+		cout<<"\n";
+	}
+
+	while(1)
+	{
+		int curr;
+		int visited[n]={0};
+		vector<int> ans;
+		cout<<"\n1. BFS";
+		cout<<"\n 2.DFS";
+		cout<<"\n 3. Exit";
+		cout<<"\nChoice : ";
+		int ch;
+		cin>>ch;
+		switch(ch)
+		{
+			case 0:
+				exit(1);
+				break;
+			case 1:
+				bfs(n,graph);
+				cout<<endl;
+				break;
+			case 2:
+				cout<<"Enter starting node: "<<endl;
+				cin>>curr;
+				dfs(curr,graph,visited,ans,n);
+				for(int i=0;i<ans.size();i++)
+				{
+					cout<<ans[i]<<' ';
+				}
+				cout<<endl;
+				break;
+			default:
+				cout<<"Enter right choice"<<endl;
+				break;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Graph
+
+
+#include <iostream>
+#include<string.h>
+#include<stack>
+#include<queue>
+using namespace std;
+#define size 30;
+
+
+class node
+{
+//	string name;
+	int data;
+	node* link;
+
+	public:
+
+		node(){
+			data = -1;
+			link = nullptr;
+		}
+
+		node(int s){
+			data = s;
+			link = NULL;
+		}
+
+	friend class Graph;
+};
+
+class Graph
+{
+	int vertices,edges;
+	node** header;
+	 queue<int> q1;
+	 bool *visited1;
+	public:
+		Graph(){
+			vertices = edges = 0;
+			header = new node*[vertices];
+			visited1=new bool[vertices];
+
+			for(int i=0;i<vertices;i++){
+				header[i] = NULL;
+			}
+			for(int i=0;i<vertices;i++){
+				visited1[i] = false;
+			}
+		}
+		Graph(int v,int e){
+			vertices = v;
+			edges = e;
+			header = new node*[vertices];
+			visited1=new bool[vertices];
+
+			for(int i=0;i<vertices;i++){
+				header[i] = NULL;
+			}
+			for(int i=0;i<vertices;i++){
+				visited1[i] = false;
+			}
+		}
+		void acceptGraph(){
+			for(int i=0;i<edges;i++){
+				int source,dest;
+//				bool flag=false;
+				cout<<"\nEnter the source: ";
+				cin>>source;
+				cout<<"\nEnter the destination: ";
+				cin>>dest;
+				if(header[source]==NULL){
+					node* newSource = new node(source);
+					header[source] = newSource;
+				}
+				if(header[dest]==NULL){
+					node* newDest = new node(dest);
+					header[dest] = newDest;
+				}
+
+				node* temp = header[source];
+				while(temp->link !=NULL){
+					temp = temp->link;
+				}
+				node* newDest = new node(dest);
+				temp->link = newDest;
+			}
+		}
+		void display(){
+			for(int i=0;i<vertices;i++){
+				node* temp = header[i];
+				cout<<i<<" : ";
+				while(temp!=NULL){
+					cout<<temp->data<<" -> ";
+					temp = temp->link;
+				}
+				cout<<"\n";
+			}
+		}
+
+
+		void bfs() {
+		    bool visited[vertices];
+		    for (int i = 0; i < vertices; i++) {
+		        visited[i] = false;
+		    }
+		    queue<int> q;
+		    int starting = 0;
+		    q.push(starting);
+
+		    while (!q.empty()) {
+		        int popped = q.front();
+		        q.pop();
+		        if (!visited[popped]) {
+		            node* temp = header[popped];
+		            visited[popped] = true;
+		            cout << popped << "->";
+		            while (temp != nullptr) {
+		                if (!visited[temp->data]) {
+		                    q.push(temp->data);
+		                }
+		                temp = temp->link;
+		            }
+		        }
+		    }
+		    cout << "\n";
+		}
+		void bfs_recursive(int s){
+
+			cout<<s<<"->";
+			visited1[s]=true;
+
+    		node* temp=header[s];
+            while (temp != nullptr) {
+                if (!visited1[temp->data]) {
+                    q1.push(temp->data);
+                }
+                temp = temp->link;
+            }
+
+            if (q1.empty()) {
+            	return;
+            }
+            int x=q1.front();
+            q1.pop();
+            bfs_recursive(x);
+
+		}
+
+		void dfs(){
+			bool visited[vertices];
+			for(int i=0;i<vertices;i++){
+				visited[i] = false;
+			}
+			stack<int> s;
+			int starting = 0;
+			s.push(starting);
+
+			while(!s.empty()){
+				int popped =s.top();
+				s.pop();
+				if(!visited[popped]){
+					node* temp = header[popped];
+					visited[popped] = true;
+					cout<<popped<<"->";
+					while(temp!=NULL){
+						if(!visited[temp->data]){
+							s.push(temp->data);
+						}
+						temp = temp->link;
+					}
+				}
+			}
+			cout<<"\n";
+		}
+
+		void dfs_recursive(int s){
+			bool visited[vertices];
+			for(int i=0;i<vertices;i++){
+				visited[i]=false;
+			}
+			cout<<s<<"->";
+			visited[s]=true;
+			node* temp=header[s];
+			while(temp!=nullptr){
+				if(!visited[temp->data]){
+					dfs_recursive(temp->data);
+				}
+				temp=temp->link;
+			}
+		}
+};
+
+int main() {
+	int v,e;
+	cout<<"\nEnter vertices: ";
+	cin>>v;
+	cout<<"\nEnter edges: ";
+	cin>>e;
+	Graph g=Graph(v,e);
+	g.acceptGraph();
+	int c;
+	while(true){
+		cout<<"\nEnter Your Choice:\n1.DFS\n2.DFS Recursive\n3.BFS\n4.BFS Recursive\n5.Display Graph\n6.Create New graph\n7.Exit\n";
+		cin>>c;
+		if(c==7){
+			break;
+		}
+		switch(c){
+		case 1:
+			cout<<"\nDFS : ";
+			g.dfs();
+			break;
+
+		case 2:
+			cout<<"\nDFS Recursive : ";
+			g.dfs_recursive(0);
+			break;
+		case 3:
+			cout<<"\nBFS : ";
+			g.bfs();
+			break;
+		case 4:
+			cout<<"\nBFS Recursive : ";
+			g.bfs_recursive(0);
+			break;
+		case 5:
+			cout<<"\nYour Graph : ";
+			g.display();
+			break;
+
+		case 6:
+			cout<<"/nEnter vertices: ";
+			cin>>v;
+			cout<<"\nEnter edges: ";
+			cin>>e;
+			g=Graph(v,e);
+			g.acceptGraph();
+			break;}
+
+	}
+	return 0;
+}
+
+
+
+
+
+
+
+// DFS_BFS
+
+
+#include<bits/stdc++.h>
+using namespace std;
+void bfs_rec(vector<int>vec[],vector<int> &visit, queue<int> & q,vector<int> & ans)
+{
+    if(q.empty())
+    {
+        return ;
+    }
+    int ele=q.front();
+    q.pop();
+    ans.push_back(ele);
+    vector<int>a=vec[ele];
+    for(int i=0;i<a.size();i++)
+    {
+        if(!visit[a[i]])
+        {
+            visit[a[i]]=1;
+            cout<<"Visiting "<<a[i]<<" Vertex and inserting it into queue\n";
+            q.push(a[i]);
+        }
+    }
+    bfs_rec(vec,visit,q,ans);
+}
+void BFS(vector<int>vec[],int n)
+{
+    vector<int>visit(n+1,0);
+    queue<int>q;
+    vector<int>ans;
+    for(int i=1;i<=n;i++)
+    {
+        if(visit[i]==0)
+        {
+
+            visit[i]=1;
+            cout<<"Visiting "<<i<<" Vertex and inserting it into stack\n";
+            q.push(i);
+             bfs_rec(vec,visit,q,ans);
+        }
+    }
+    cout<<"\nBFS Traversal is : ";
+    for(int i=0;i<ans.size();i++)
+    {
+        cout<<ans[i]<<" ";
+    }
+    cout<<"\n";
+
+}
+void bfs_rec_search(vector<int>vec[],vector<int> &visit, queue<int> & q,vector<int> & ans,int & find,int target)
+{
+    if(q.empty())
+    {
+        return ;
+    }
+    int ele=q.front();
+    q.pop();
+    ans.push_back(ele);
+    if(ele==target)
+    {
+        find=1;
+        return ;
+    }
+
+    vector<int>a=vec[ele];
+    for(int i=0;i<a.size();i++)
+    {
+        if(!visit[a[i]])
+        {
+            visit[a[i]]=1;
+
+            q.push(a[i]);
+        }
+        if(find==1)
+        {
+            break;
+        }
+    }
+    if(find!=1)
+    {
+        bfs_rec_search(vec,visit,q,ans,find,target);
+    }
+}
+void BFS_Search(vector<int>vec[],int n,int target)
+{
+     vector<int>visit(n+1,0);
+    queue<int>q;
+    vector<int>ans;
+    int find=0;
+    for(int i=1;i<=n;i++)
+    {
+        if(visit[i]==0)
+        {
+            visit[i]=1;
+            q.push(i);
+            bfs_rec_search(vec,visit,q,ans,find,target);
+        }
+        if(find==1)
+        {
+            break;
+        }
+    }
+    if(find==1)
+    {
+        cout<<"\nVertex Found \n";
+        cout<<"\nBFS Traversal for vertex "<< target <<" is : ";
+        for(int i=0;i<ans.size();i++)
+        {
+            cout<<ans[i]<<" ";
+        }
+        cout<<"\n";
+    }
+    else
+    {
+        cout<<"\nVertex Not Found \n";
+    }
+
+}
+void dfs_rec(vector<int>vec[],vector<int> &visit,stack<int>st,vector<int> &ans)
+{
+    int n=st.top();
+    st.pop();
+     vector<int>a=vec[n];
+     ans.push_back(n);
+    // cout<<n<<" ";
+     for(int i=0;i<a.size();i++)
+     {
+         int ele=a[i];
+         if(visit[a[i]]==0)
+         {
+             visit[a[i]]=1;
+             cout<<"Visiting "<<a[i]<<" Vertex and inserting it into stack\n";
+            st.push(a[i]);
+             dfs_rec(vec,visit,st,ans);
+         }
+     }
+}
+void dfs_rec_search(vector<int>vec[],vector<int> &visit,stack<int>st,vector<int> &ans,int & find,int target)
+ {
+      int n=st.top();
+    st.pop();
+     vector<int>a=vec[n];
+     ans.push_back(n);
+     if(n==target)
+     {
+         find=1;
+         return;
+     }
+
+     for(int i=0;i<a.size();i++)
+     {
+         int ele=a[i];
+         if(visit[a[i]]==0)
+         {
+             visit[a[i]]=1;
+
+             st.push(a[i]);
+             dfs_rec_search(vec,visit,st,ans,find,target);
+             if(find==1)
+             {
+                 break;
+             }
+         }
+     }
+ }
+void DFS_Search(vector<int>vec[],int n,int target)
+{
+    vector<int>ans;
+    vector<int>visit(n+1,0);
+    stack<int>st;
+      int find=0;
+    for(int i=1;i<=n;i++)
+    {
+        if(visit[i]==0)
+        {
+            visit[i]=1;
+
+            st.push(i);
+            dfs_rec_search(vec,visit,st,ans,find,target);
+        }
+        if(find==1)
+        {
+            break;
+        }
+    }
+     if(find==1)
+    {
+        cout<<"\nVertex Found \n";
+        cout<<"\nDFS Traversal for vertex is : ";
+        for(int i=0;i<ans.size();i++)
+        {
+            cout<<ans[i]<<" ";
+        }
+        cout<<"\n";
+    }
+    else
+    {
+        cout<<"\nVertex Not Found \n";
+    }
+}
+void DFS(vector<int>vec[],int n)
+{
+    vector<int>ans;
+    vector<int>visit(n+1,0);
+    stack<int>st;
+    for(int i=1;i<=n;i++)
+    {
+        if(visit[i]==0)
+        {
+            visit[i]=1;
+            cout<<"Visiting "<<i<<" Vertex and inserting it into stack\n";
+            st.push(i);
+            dfs_rec(vec,visit,st,ans);
+        }
+    }
+
+     cout<<"\nDFS Traversal is : ";
+    for(int i=0;i<ans.size();i++)
+    {
+        cout<<ans[i]<<" ";
+    }
+    cout<<"\n";
+
+
+}
+
+int main()
+{
+    int n,edge,u,v;
+    cout<<"Enter Number of Vertices : ";
+    cin>>n;
+    vector<int>vec[n+1];
+    cout<<"Enter Number of Edges : ";
+    cin>>edge;
+    for(int i=0;i<edge;i++)
+    {
+        cout<<"Enter source index : ";
+        cin>>u;
+        cout<<"Enter destination vertex : ";
+        cin>>v;
+        vec[u].push_back(v);
+        vec[v].push_back(u);
+    }
+
+    cout<<"\nGraph\n";
+
+    for(int i=1;i<n+1;i++)
+    {
+        cout<<i<<" -> ";
+        vector<int>a=vec[i];
+        for(int j=0;j<vec[i].size();j++)
+         {
+             cout<<a[j]<<" ";
+         }
+        cout<<"\n";
+    }
+
+    cout<<"\n\nBFS Treversal \n\n";
+    BFS(vec,n);
+
+    cout<<"\n\nDFS Treversal \n\n";
+    DFS(vec,n);
+
+    while(1)
+    {
+        cout<<"\n\nEnter the node to search : ";
+        int node;
+        cin>>node;
+        cout<<"\n1. BFS";
+        cout<<"\n 2.DFS";
+        cout<<"\n 3. Exit";
+        cout<<"\nChoice : ";
+        int ch;
+        cin>>ch;
+        switch(ch)
+        {
+            case 0:
+                exit(1);
+                break;
+            case 1:
+                BFS_Search(vec,n,node);
+                break;
+            case 2:
+                DFS_Search(vec,n,node);
+                break;
+            default:
+            cout<<"Invalid choice\n";
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+try
+{
+    input();
+}
+catch(std::runtime_error& e)
+{
+    // deal with your invalid input here
+}

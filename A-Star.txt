@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int ans = 0;              // represents total moves made
+
+int heuristicFn(vector<vector<int>> &initialState, vector<vector<int>> &finalstate)    // manhattan distance is used as heuristic function (sum of the distances of each tile from its goal position)
+{
+    int cost = 0;
+    vector<pair<int, int>> ini(9);
+    vector<pair<int, int>> fin(9);
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            ini[initialState[i][j]] = {i, j};
+            fin[finalstate[i][j]] = {i, j};
+        }
+    }
+    for (int i = 0; i < 9; i++)
+    {
+        cost += abs(ini[i].first - fin[i].first);
+        cost += abs(ini[i].second - fin[i].second);
+    }
+    return cost;
+}
+
+void solve(int moves, vector<vector<int>> &initialstate, vector<vector<int>> &finalstate)
+{
+    cout << endl;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            cout << initialstate[i][j] << " ";
+        }
+        cout << endl;
+    }
+    if (initialstate == finalstate)
+    {
+        ans = moves;
+        return;
+    }
+    int x, y;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (initialstate[i][j] == 0)          // getting initial coordinates of the blank tile (represented by 0)
+            {
+                x = i;
+                y = j;
+            }
+        }
+    }
+    vector<vector<int>> v;                 // used to store the cost,x,y of blank tile after up,right,down,left moves
+    if ((x + 1) < 3)
+    {
+        swap(initialstate[x + 1][y], initialstate[x][y]);
+        int c = heuristicFn(initialstate, finalstate);
+        swap(initialstate[x + 1][y], initialstate[x][y]);
+        vector<int> sa = {c, x + 1, y};
+        v.push_back(sa);
+    }
+    if ((x - 1) >= 0)
+    {
+        swap(initialstate[x - 1][y], initialstate[x][y]);
+        int c = heuristicFn(initialstate, finalstate);
+        swap(initialstate[x - 1][y], initialstate[x][y]);
+        vector<int> sa = {c, x - 1, y};
+        v.push_back(sa);
+    }
+    if ((y + 1) < 3)
+        {
+        swap(initialstate[x][y + 1], initialstate[x][y]);
+        int c = heuristicFn(initialstate, finalstate);
+        swap(initialstate[x][y + 1], initialstate[x][y]);
+        vector<int> sa = {c, x, y + 1};
+        v.push_back(sa);
+    }
+    if ((y - 1) >= 0)
+    {
+        swap(initialstate[x][y - 1], initialstate[x][y]);
+        int c = heuristicFn(initialstate, finalstate);
+        swap(initialstate[x][y - 1], initialstate[x][y]);
+        vector<int> sa = {c, x, y - 1};
+        v.push_back(sa);
+    }
+    sort(v.begin(), v.end());                                       // arranging is ascending order of heuristic funvtion value
+    swap(initialstate[x][y], initialstate[v[0][1]][v[0][2]]);		// finally swap the blank tile with the configuration which gave least value of heuristic function
+    solve(moves + 1, initialstate, finalstate);
+}
+
+int main()
+{
+
+    cout << "Enter the 8 puzzle problem in the form of 3*3 matrix: ";
+    vector<vector<int>> initialstate(3, vector<int>(3, 0));
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            cin >> initialstate[i][j];
+        }
+    }
+    cout << endl;
+    vector<vector<int>> finalstate = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
+    int moves = 0;
+    cout << "The shortest path for final state is : ";
+    cout << endl;
+    solve(moves, initialstate, finalstate);
+    cout << endl;
+    cout << "Cost of solving the problem is : " << ans << endl;
+
+    return 0;
+}

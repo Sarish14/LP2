@@ -1,0 +1,413 @@
+// EXPERT SYSTEM-1
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "Enter the name of the Employee" << endl;
+    string name, domain, gender;
+    int num_tasks, num_hrs, salary, prev_rating, num_presentations, age, exp_yrs, num_leaves;
+    cin >> name;
+    cout << "In which domain " << name << " is working (web/testing/design)" << endl;
+    cin >> domain;
+    cout << "What is the gender of " << name << " (M/F)" << endl;
+    cin >> gender;
+    cout << "Lets evaluate the performance of " << name << " " << endl;
+    cout << endl;
+    cout << "What is the number of tasks successfully completed by " << name << " out of 10" << endl;
+    cin >> num_tasks;
+    cout << "What is the average hours " << name << " has worked each week " << endl;
+    cin >> num_hrs;
+    cout << "What is the salary of " << name << " per year " << endl;
+    cin >> salary;
+    cout << "What is the previous rating of " << name << " out of 5 " << endl;
+    cin >> prev_rating;
+    cout << "How many presentation does " << name << " given last year" << endl;
+    cin >> num_presentations;
+    cout << "What is the age of the employee" << endl;
+    cin >> age;
+    cout << "What is the experience of " << name << " " << endl;
+    cin >> exp_yrs;
+    cout << "How many leave " << name << " has taken last year" << endl;
+    cin >> num_leaves;
+    int rat = 0;
+
+    if (num_presentations >= 10)
+    {
+        rat++;
+    }
+    if (num_leaves <= 20)
+    {
+        rat++;
+    }
+    if (num_tasks > 8)
+    {
+        rat += 2;
+    }
+    if (num_hrs > 49)
+    {
+        rat++;
+    }
+    cout << "The evaluation of " << name << endl;
+    cout << "This year rating is " << rat << endl;
+
+    if (gender == "M")
+    {
+        if (domain == "web")
+        {
+            if (num_hrs >= 37 && num_tasks >= 7)
+            {
+                if (salary <= 800000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salary should be incremented by 100000" << endl;
+                }
+
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salary should remain same" << endl;
+                }
+            }
+            else
+            {
+                if (salary >= 1500000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salary should be decremented by 100000" << endl;
+                }
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salary should remain same" << endl;
+                }
+            }
+        }
+        else if (domain == "testing")
+        {
+            if (num_hrs >= 40 && num_tasks > 8)
+            {
+                if (salary <= 500000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be incremented by 100000" << endl;
+                }
+
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should remain same" << endl;
+                }
+            }
+            else
+            {
+                if (salary >= 1000000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be decremented by 100000" << endl;
+                }
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should remain same" << endl;
+                }
+            }
+        }
+        else if (domain == "design")
+        {
+            if (num_hrs >= 37 && num_tasks > 6)
+            {
+                if (salary <= 1000000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be incremented by 100000" << endl;
+                }
+
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should remain same" << endl;
+                }
+            }
+            else
+            {
+                if (salary > 1800000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be decremented by 100000" << endl;
+                }
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should remain same" << endl;
+                }
+            }
+        }
+        if (rat > prev_rating)
+        {
+            cout << "The rating of " << name << " has increased. He has performed well this year" << endl;
+        }
+        else if (rat < prev_rating && age < 25)
+        {
+            cout << "The employee has underperformed but can be trained for effective performance" << endl;
+        }
+        else if (rat < prev_rating && age > 25)
+        {
+            cout << "The employee has underperformed and proved to be unproductive for the company" << endl;
+        }
+        else
+        {
+            cout << "The performance of the employee is maintained" << endl;
+        }
+        if (exp_yrs > 8 && prev_rating == 5)
+        {
+            cout << name << " should get a promotion in the company" << endl;
+        }
+    }
+    if (gender == "F")
+    {
+        if (domain == " web")
+        {
+            if (num_hrs >= 30 && num_tasks > 7)
+            {
+                if (salary <= 800000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be incremented by 100000" << endl;
+                }
+                else if (salary >= 1500000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be decremented by 100000" << endl;
+                }
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should remain same" << endl;
+                }
+            }
+        }
+        else if (domain == " testing")
+        {
+            if (num_hrs >= 35 && num_tasks > 8)
+            {
+                if (salary <= 500000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be incremented by 100000" << endl;
+                }
+                else if (salary >= 1000000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be decremented by 100000" << endl;
+                }
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should remain same" << endl;
+                }
+            }
+        }
+        else if (domain == " design")
+        {
+            if (num_hrs >= 32 && num_tasks > 6)
+            {
+                if (salary <= 1000000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be incremented by 100000" << endl;
+                }
+                else if (salary > 1800000)
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should be decremented by 100000" << endl;
+                }
+                else
+                {
+                    cout << "Acccording to the performance of " << name << " the salaray should remain same" << endl;
+                }
+            }
+        }
+        if (rat > prev_rating)
+        {
+            cout << "The rating of " << name << " has increased. He has performed well this year" << endl;
+        }
+        else if (rat < prev_rating && age < 25)
+        {
+            cout << "The employee has underperformed but can be trained for effective performance" << endl;
+        }
+        else if (rat < prev_rating && age > 25)
+        {
+            cout << "The employee has underperformed and proved to be unproductive for the company" << endl;
+        }
+        else
+        {
+            cout << "The performance of the employee is maintained" << endl;
+        }
+        if (exp_yrs > 8 && prev_rating == 5)
+        {
+            cout << name << " should get a promotion in the company" << endl;
+        }
+    }
+}
+
+
+
+
+
+// EXPERT SYSTEM -2
+
+
+#include<bits/stdc++.h>        //importing files
+using namespace std;
+
+int checkres(string a){      //checking response is yes or not
+    if(a=="y"){
+        return 1;
+    }
+    return 0;
+}
+
+void flue(string name){           //function for flue
+        string res;
+        //Asking questions for the  flue
+        cout<<"HI "<<name<<" Are you ready to take flu test:?(y/n) "<<endl;
+        cin>>res;
+        if(res=="y"){
+            cout<<"Good then go then ........"<<endl;
+            cout<<"Loading question............................................."<<endl;
+        }else{
+            return ;
+        }
+        int prob=0;
+        cout<<"1) Do you have cold? (y/n)"<<endl;         //condition for cold
+        cin>>res;
+        prob+=checkres(res);
+        cout<<"2) what is your body tempreture ?"<<endl;    //body temp
+        int temp=0;
+        cin>>temp;
+        if(temp>100){
+            prob++;
+        }
+        cout<<"3)Do you feel weakness in body? (y/n)"<<endl;   //weakness condition
+         cin>>res;
+        prob+=checkres(res);
+
+        cout<<"4)Do you feel headache ? (y/n)"<<endl;   // headache condition
+         cin>>res;
+        prob+=checkres(res);
+
+        if(prob>2){            //condition for probability
+            cout<<"YES, there are high chances that you are suffering from flu....\n I will suggest you to do following:==\n"<<endl;
+            cout<<"1) Contact the doctor and follow proper medication\n";
+            cout<<"2) Take rest for few days and dont go outside\n";
+            cout<<"3) Eat healthy food..\n";
+        }else if(prob <=2 && prob!=0){
+            cout<<"Take rest for few days .....\n";
+
+        }else{
+            cout<<"Thank god, Dont worry you are healthy....."<<endl;
+        }
+
+
+
+
+}
+void stress(string name){         // stress function
+string res;
+//Asking questions for the  stress
+        cout<<"HI "<<name<<" are you ready to take Stress test:?(y/n) "<<endl;
+        cin>>res;
+        if(res=="y"){
+            cout<<"Good then go then ........"<<endl;
+            cout<<"Loading question............................................."<<endl;
+        }else{
+            return ;
+        }
+        int prob=0;
+        cout<<"1) do you feel headache?"<<endl;
+        cin>>res;
+        prob+=checkres(res);
+
+        cout<<"2) Do you feel depressed ?"<<endl;
+        cin>>res;
+        prob+=checkres(res);
+         cout<<"3) are you specnding ypur day in the overthinking.....?"<<endl;
+        cin>>res;
+        prob+=checkres(res);
+
+
+        if(prob>2){    //condition for probability
+            cout<<"YES, there are high chances that you have stress....\n I will suggest you to do following:==\n"<<endl;
+            cout<<"1) Contact the doctor and follow proper medication\n";
+            cout<<"2) Do yoga and meditation\n";
+            cout<<"3) Eat healthy food..\n";
+            cout<<"4)spend time with friends and travel in the open air...\n";
+        }else if(prob <=2 && prob!=0){
+            cout<<"Do yoga and meditaion .....\n";
+
+        }else{
+            cout<<"Thank god, Dont worry you are healty....."<<endl;
+        }
+
+
+
+}
+int  main(){       // driver function
+
+    cout<<"Hello Welcome to the Medicure...."<<endl;
+    string name="";
+    cout<<"Enter your good name:"<<endl;
+    cin>>name;
+    cout<<"Hi... "<<name<<" tell me what is your problem, I am here to dolve your problem by identifying the system "<<endl;
+    cout<<"I can  check for the flue and the stress so select option acording to your requirement: "<<endl;
+    int choice;        //make your choice
+    menu:
+    cout<<"1) Flue\n 2) Stress"<<endl;
+    cout<<"Check one of the above:"<<endl;
+    cin>>choice;
+
+     if(choice==1){
+        flue(name);
+     }else if(choice==2){
+        stress(name);
+     }else{
+        cout<<"Wrong choice!!!"<<endl;
+        goto menu;
+     }
+
+   cout<<"Thak you so much for using medicure ......."<<endl;
+   return 0;
+}
+
+
+
+
+
+
+// EXPERT SYSTEM -3
+
+def rule1(symptoms):
+    if 'fever' in symptoms and 'cough' in symptoms and 'fatigue' in symptoms:
+        return 'You may have the flu.'
+    return None
+
+def rule2(symptoms):
+    if 'fever' in symptoms and 'rash' in symptoms and 'headache' in symptoms:
+        return 'You may have meningitis.'
+    return None
+
+def rule3(symptoms):
+    if 'pain' in symptoms and 'swelling' in symptoms and 'bruising' in symptoms:
+        return 'You may have a fracture.'
+    return None
+
+def rule4(symptoms):
+    if 'abdominal pain' in symptoms and 'diarrhea' in symptoms and 'nausea' in symptoms:
+        return 'You may have food poisoning.'
+    return None
+
+def rule5(symptoms):
+    if 'shortness of breath' in symptoms and 'chest pain' in symptoms and 'dizziness' in symptoms:
+        return 'You may be having a heart attack. Please seek medical attention immediately.'
+    return None
+
+# Define the expert system
+def diagnose(symptoms):
+    rules = [rule1, rule2, rule3, rule4, rule5]
+    results = []
+    for rule in rules:
+        result = rule(symptoms)
+        if result:
+            results.append(result)
+    if len(results) == 0:
+        return 'Sorry, we could not diagnose your condition.'
+    elif len(results) == 1:
+        return results[0]
+    else:
+        return 'You may have multiple conditions: ' + ', '.join(results)
+
+# Test the expert system
+symptoms = ['fever', 'rash', 'headache']
+result = diagnose(symptoms)
+print(result) # Output: You may have the flu.

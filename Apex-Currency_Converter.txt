@@ -1,0 +1,116 @@
+// Apex Class Page
+
+
+public class currencycon {
+public Decimal amount { get; set; }
+public String fromCurrency { get; set; }
+public String toCurrency { get; set; }
+public Decimal convertedAmount { get; set; }
+public Boolean showResult { get; set; }
+
+public class CurrencyConversion {
+public String fromCurrency;
+public String toCurrency;
+public Decimal value;
+
+public CurrencyConversion(String fromCurrency, String toCurrency, Decimal value) {
+this.fromCurrency = fromCurrency;
+this.toCurrency = toCurrency;
+this.value = value;
+}
+}
+
+public List<SelectOption> getCurrencyOptions() {
+// Return a list of currency options dynamically
+List<SelectOption> options = new List<SelectOption>();
+options.add(new SelectOption('USD', 'USD'));
+options.add(new SelectOption('EUR', 'EUR'));
+options.add(new SelectOption('GBP', 'GBP'));
+options.add(new SelectOption('INR', 'INR'));
+
+// Add more currency options as needed
+return options;
+}
+public List<CurrencyConversion> conversionList;
+
+public currencycon(){
+conversionList = new List<CurrencyConversion>();
+
+// Adding items to the list
+conversionList.add(new CurrencyConversion('USD', 'EUR', 0.93));
+conversionList.add(new CurrencyConversion('USD', 'GBP', 0.81));
+conversionList.add(new CurrencyConversion('USD', 'INR', 82.82));
+conversionList.add(new CurrencyConversion('EUR', 'USD', 1.08));
+conversionList.add(new CurrencyConversion('EUR', 'GBP', 0.87));
+conversionList.add(new CurrencyConversion('EUR', 'INR', 89.41));
+conversionList.add(new CurrencyConversion('GBP', 'USD', 1.12));
+conversionList.add(new CurrencyConversion('GBP', 'EUR', 1.15));
+conversionList.add(new CurrencyConversion('GBP', 'INR', 102.67));
+conversionList.add(new CurrencyConversion('INR', 'USD', 0.012));
+conversionList.add(new CurrencyConversion('INR', 'GBP', 0.0097));
+conversionList.add(new CurrencyConversion('INR', 'EUR', 0.011));
+
+
+
+}
+
+public void convertCurrency() {
+
+Decimal conversionRate = 0;
+
+for (CurrencyConversion conversion :conversionList) {
+if (conversion.fromCurrency == fromCurrency && conversion.toCurrency == ToCurrency) {
+conversionRate = conversion.value;
+break;
+}
+}
+convertedAmount = amount * conversionRate;
+
+showResult = true;
+}
+}
+
+
+
+
+
+// Visual Force Page
+
+
+
+<apex:page controller="currencycon">
+<div style = "Text-Align:center; width: 350px; height: 250px; border: 2px ridge #D3D3D3; margin: auto; margin-top:200px; background-color: #F5F5F5;">
+<apex:form >
+<br/>
+<h6 style="font-size:20px;">Currency Converter</h6><br/><br/>
+<apex:outputLabel value="Amount: " />
+
+<apex:inputText value="{!amount}" html-placeholder="Enter amounts" onkeyup="validateInput(this)" /><br/><br/>
+<br/><br/>
+
+<apex:outputLabel value="From Currency: " />
+<apex:selectList value="{!fromCurrency}" >
+<apex:selectOptions value="{!currencyOptions}"/>
+</apex:selectList>
+<apex:outputLabel value="To Currency: " />
+<apex:selectList value="{!toCurrency}" label="To Currency">
+<apex:selectOptions value="{!currencyOptions}"/>
+</apex:selectList>
+<br/><br/>
+<apex:commandButton value="Convert" action="{!convertCurrency}"/> <br/><br/>
+<apex:outputText style="font-size:15px;" value="Converted Amount: {!convertedAmount}" rendered="{!showResult}"/>
+</apex:form>
+<script>
+function validateInput(input) {
+var value = input.value.trim();
+var isValid = /^\d+(\.\d+)?$/.test(value); // Regular expression to match double values
+
+if (!isValid) {
+input.style.borderColor = 'red';
+} else {
+input.style.borderColor = '';
+}
+}
+</script>
+</div>
+</apex:page>

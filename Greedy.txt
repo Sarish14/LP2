@@ -1,0 +1,99 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void selectionSort()
+{
+	int n;
+	cout<<"Enter number of elemetns: "<<endl;
+	cin>>n;
+	vector<int> arr(n);
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Enter element: "<<endl;
+		cin>>arr[i];
+	}
+	for(int i=0;i<n;i++)
+	{
+		int min_idx=i;
+		for(int j=i;j<n;j++)
+		{
+			if(arr[j]<arr[min_idx])
+			{
+				min_idx=j;
+			}
+		}
+		swap(arr[i],arr[min_idx]);
+	}
+	for(int i=0;i<n;i++)
+	{
+		cout<<arr[i]<<' ';
+	}
+}
+
+void dijkstra()
+{
+	int n, edges, u, v, w, src;
+	cout<<"Enter number of vertices: "<<endl;
+	cin>>n;
+	vector<pair<int,int>> graph[n];                //{{4,0},{5,1}}
+	cout<<"Enter number of edges: "<<endl;
+	cin>>edges;
+	for(int i=0;i<edges;i++)
+	{
+		cout<<"Enter source index : ";
+		cin>>u;
+		cout<<"Enter destination vertex : ";
+		cin>>v;
+		cout<<"Enter edge weight: ";
+		cin>>w;
+		graph[u].push_back({w,v});
+		graph[v].push_back({w,u});
+	}
+	cout<<endl;
+	for(int i=0;i<n;i++)
+	{
+		cout<<i<<" -> ";
+		//vector<int>a=graph[i];
+		for(int j=0;j<graph[i].size();j++)
+		 {
+			 cout<<"{"<<graph[i][j].first<<','<<graph[i][j].second<<"}";
+		 }
+		cout<<"\n";
+	}
+	cout<<"Enter source node"<<endl;
+	cin>>src;
+	priority_queue <pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+	vector<int> dist(n,INT_MAX);
+	dist[src]=0;
+	pq.push({0,src});
+	while(!pq.empty())
+	{
+		auto temp=pq.top();
+		pq.pop();
+		int edge=temp.second;
+		int dis=temp.first;
+		for(auto i:graph[edge])
+		{
+			int adjNode=i.second;
+			int edgeWeight=i.first;
+			if(edgeWeight + dis < dist[adjNode])
+			{
+				dist[adjNode]=edgeWeight+dis;
+				pq.push({edgeWeight+dis,adjNode});
+			}
+		}
+	}
+	for(int i=0;i<dist.size();i++)
+	{
+		cout<<dist[i]<<' ';
+	}
+}
+
+
+// 1-[{2,0},{3,2}]
+
+int main() {
+	selectionSort();
+	dijkstra();
+	return 0;
+}

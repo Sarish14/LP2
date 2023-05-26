@@ -1,0 +1,246 @@
+// CHATBOT-1
+
+import re
+import random
+# Define the chatbot's rules and responses
+rules = {
+    'greeting': {
+        'patterns': [r'hello', r'hi', r'hey'],
+        'responses': ['Hello! Welcome to our food ordering service.', 'Hi there! How can I assist you with your order?']
+    },
+    'menu': {
+        'patterns': [r'menu', r'options'],
+        'responses': ['Sure! Here is our menu: ...\n 1.Pav Bhaji \n 2.Vada Pav \n 3.Maggi \n 4.Chai'],
+    },
+    'food items' : {
+        'patterns' : [r'Vada Pav',r'Pav Bhaji',r'Chai',r'Maggi' ],
+        'responses' : ['Do you want to confirm your order??'],
+    },
+    'order': {
+        'patterns': [r'order', r'I want to order'],
+        'responses': ['Great! Please let me know what items you would like to order.'],
+    },
+    'customization': {
+        'patterns': [r'customize', r'special request'],
+        'responses': ['Certainly! Let me know your specific requirements or any dietary restrictions.'],
+    },
+    'confirm_order': {
+        'patterns': [r'confirm', r'place order'],
+        'responses': ['Perfect! Your order has been placed. The estimated delivery time is approximately 30 minutes.'],
+    },
+    'gratitude' : {
+        'patterns' : [r'thank you'],
+        'responses' : ['My pleasure']
+    },
+    'cancel_order': {
+        'patterns': [r'cancel', r'change', r'update'],
+        'responses': ['I apologize for the inconvenience. Please contact our customer support for order modifications.'],
+    },
+    'goodbye': {
+        'patterns': [r'bye', r'goodbye', r'see you'],
+        'responses': ['Thank you for choosing our food ordering service.', 'Goodbye!'],
+    },
+    'default': {
+        'responses': ['Im sorry, I didnt understand that. Can you please rephrase?']
+    }
+}
+
+# Function to match user input with patterns
+def match_patterns(user_input, patterns):
+    for pattern in patterns:
+        match = re.search(pattern, user_input, re.IGNORECASE)
+        if match:
+            return True
+    return False
+
+# Function to get chatbot's response
+def get_response(user_input):
+    for intent, data in rules.items():       # goes through all patterns 
+        patterns = data.get('patterns')
+        if patterns and match_patterns(user_input, patterns):     # if unput matches pattern then get the response
+            responses = data.get('responses')
+            return random.choice(responses)
+    return random.choice(rules['default']['responses'])
+
+# Main conversation loop
+def chat():
+    print("Chatbot: Hello! Welcome to our food ordering service.")
+    while True:
+        user_input = input("User: ")
+        response = get_response(user_input)
+        print("Chatbot:", response)
+
+        # Exit the loop if the user says goodbye
+        if any(re.search(pattern, user_input) for pattern in rules['goodbye']['patterns']):
+            break
+
+# Start the chatbot
+chat()
+
+
+
+
+
+
+
+
+
+
+
+
+// CHATBOT-2
+
+import random
+
+# Define the chatbot responses
+greetings = ['Hello!', 'Hi!', 'Hey there!', 'Greetings!', 'Nice to see you!']
+goodbyes = ['Goodbye!', 'See you later!', 'Farewell!', 'Bye!', 'Take care!']
+help_responses = ['How may I assist you?', 'What can I do for you?', 'How can I help?']
+problem_responses = ['I\'m sorry to hear that. Can you please tell me more about the problem?', 'Let me see if I can help. What seems to be the issue?', 'I\'ll do my best to help you. What\'s the problem?']
+thankyou_responses = ['You are welcome!', 'No problem!', 'It was my pleasure!', 'Glad to help!']
+
+# Define the chatbot function
+def chatbot():
+    print('Chatbot: ' + random.choice(greetings))
+    while True:
+        user_input = input('User: ')
+        if 'hello' in user_input.lower() or 'hi' in user_input.lower() or 'hey' in user_input.lower():
+            print('Chatbot: ' + random.choice(greetings))
+        elif 'bye' in user_input.lower() or 'goodbye' in user_input.lower() or 'see you' in user_input.lower():
+            print('Chatbot: ' + random.choice(goodbyes))
+            break
+        elif 'help' in user_input.lower() or 'support' in user_input.lower():
+            print('Chatbot: ' + random.choice(help_responses))
+        elif 'problem' in user_input.lower() or 'issue' in user_input.lower() or 'error' in user_input.lower():
+            print('Chatbot: ' + random.choice(problem_responses))
+        elif 'thank you' in user_input.lower() or 'thanks' in user_input.lower() or 'thankyou' in user_input.lower():
+            print('Chatbot: ' + random.choice(thankyou_responses))
+        else:
+            print('Chatbot: I\'m sorry, I don\'t understand. Can you please rephrase your request?')
+
+# Test the chatbot
+chatbot()
+
+
+
+
+// CHATBOT-3
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+// Define a class for the catboat
+class Catboat {
+public:
+    // Constructor
+    Catboat() {}
+
+    // Function to process user input and respond appropriately
+    string processInput(string input) {
+        string output;
+        if (input == "Hi" || input == "Hello") {
+            output = "Hi there! How can I assist you today?";
+        } else if (input.find("sizes") != string::npos) {
+            output = "We have sizes ranging from XS to XXL. Which size are you looking for?";
+        } else if (input.find("size") != string::npos) {
+            vector<string> sizes = {"XS", "S", "M", "L", "XL", "XXL"};
+            string sizeOutput = "We have the following sizes available: ";
+            for (int i = 0; i < sizes.size(); i++) {
+                sizeOutput += sizes[i];
+                if (i != sizes.size() - 1) {
+                    sizeOutput += ", ";
+                }
+            }
+            output = sizeOutput;
+        } else if (input.find("jeans") != string::npos) {
+            output = "Great! We have a variety of jeans available in the size you selected. Which style are you interested in?";
+        } else if (input.find("style") != string::npos) {
+            vector<string> styles = {"Skinny", "Straight", "Bootcut", "Flare"};
+            string styleOutput = "We have the following styles available: ";
+            for (int i = 0; i < styles.size(); i++) {
+                styleOutput += styles[i];
+                if (i != styles.size() - 1) {
+                    styleOutput += ", ";
+                }
+            }
+            output = styleOutput;
+        } else if (input.find("add to cart") != string::npos) {
+            output = "Great choice! The item has been added to your cart.";
+        } else {
+            output = "I'm sorry, I didn't understand. Can you please try again?";
+        }
+        return output;
+    }
+};
+
+// Main function to run the program
+int main() {
+    Catboat catboat;
+    string input, output;
+
+    // Start the conversation
+    cout << "Hi there! How can I assist you today?" << endl;
+
+    // Keep the conversation going until the user ends it
+    while (true) {
+        getline(cin, input);
+        if (input == "exit") {
+            break;
+        }
+        output = catboat.processInput(input);
+        cout << output << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+// CHATBOT-4
+
+#include <iostream>
+#include <regex>
+#include <string>
+#include <vector>
+using namespace std;
+
+vector<pair<regex,string>> rules = {
+    {regex("hi|hello", regex_constants::icase), "Hello! How can I assist you?"},
+    {regex(".*name.*", regex_constants::icase), "My name is Chatbot."},
+    {regex(".*sports.*", regex_constants::icase), "I love Sports !! I like playing Cricket"},
+    {regex(".*actor.*", regex_constants::icase), "Hrithik Roshan is my Favourite Actor !"},
+     {regex(".*created.* | .*creator.*", regex_constants::icase), "Ruturaj Panditrao is my God"},
+    {regex("how.*are.*you", regex_constants::icase), "I'm doing well, thank you!"},
+    {regex("exit",regex_constants::icase), "Goodbye!"},
+};
+
+string generateResponse(string& userInput)
+{
+    for (const auto& rule : rules) {
+        if (regex_search(userInput, rule.first)) {
+            return rule.second;
+        }
+    }
+    return "I'm sorry, I don't understand.";
+}
+
+int main()
+{
+    string userInput;
+    std::cout << "Chatbot: Hello! How can I assist you?" << std::endl;
+    while (true) {
+        std::cout << "User: ";
+        getline(cin, userInput);
+        string response = generateResponse(userInput);
+        cout << "Chatbot: " << response << std::endl;
+        if (regex_search(userInput, regex("exit", regex_constants::icase)))
+        {
+            break;
+        }
+    }
+}
